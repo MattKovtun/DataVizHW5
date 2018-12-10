@@ -12,8 +12,12 @@ df_f = pd.read_csv("population_by_age_sex_year_grouped.csv")
 
 
 def create_traces(df):
+    colors = ["rgb(190, 46, 221)",
+              "rgb(34, 166, 179)",
+              "rgb(72, 52, 212)",
+              "rgb(106, 176, 76)"]
     traces = []
-    for group in df["group"].unique():
+    for i, group in enumerate(df["group"].unique()):
         years = df["year"].unique()
         xaxis = []
         for year in years:
@@ -25,7 +29,11 @@ def create_traces(df):
         traces.append(go.Bar(
             x=years,
             y=xaxis,
-            name=group
+            name=group,
+            opacity=0.4,
+            marker=dict(
+                color=colors[i],
+            ),
         ))
     return traces
 
@@ -33,11 +41,19 @@ def create_traces(df):
 app.layout = html.Div([
     html.Div([
         dcc.Graph(id='bar_plot',
+
                   figure=go.Figure(data=create_traces(df_f),
-                                   layout=go.Layout(barmode='stack'))
+                                   layout=go.Layout(barmode='stack',
+                                                    title='Розподіл та співвідношення населення по вікових групах', )),
+                  config={
+                      'displayModeBar': False
+                  }
                   )
     ]),
-    dcc.Graph(id='my-graph'),
+    dcc.Graph(id='my-graph',
+              config={
+                  'displayModeBar': False
+              }),
     html.Div([
         dcc.Slider(
             id='slider',
@@ -74,9 +90,8 @@ def update_graph(val):
 
             ) for i in TRACES_CONFIG],
         'layout': go.Layout(
-
-            hovermode='closest',
-            yaxis=dict(range=[0, 600000])
+            yaxis=dict(range=[0, 600000]),
+            title='Різниця в кількості населення серед чоловікі'
 
         )
     }

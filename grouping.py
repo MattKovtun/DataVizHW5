@@ -2,7 +2,7 @@ import pandas as pd
 
 df = pd.read_csv("population_by_age_sex_year.csv")
 
-groups = [("0 - 18", 18), ("18 - 25", 25), ("25 - 45", 45), ("45 - 65", 65), ("65 - 80", 80)]
+groups = [("0 - 20", 20), ("20 - 40", 40), ("40 - 60", 60), ("60 - 80", 80)]
 
 df = df[df["age"] != "Вік невідомий"]
 df = df[df["age"] != "80 і старше"]
