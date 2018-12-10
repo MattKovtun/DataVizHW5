@@ -73,8 +73,8 @@ df_f = pd.read_csv("population_by_age_sex_year_grouped.csv")
 @app.callback(Output('my-graph', 'figure'),
               [Input('slider', 'value')])
 def update_graph(val):
-    TRACES_CONFIG = [['men', 'none', 'rgb(71, 71, 135)'],
-                     ['women', 'tonexty', 'rgb(255, 121, 63)']]
+    TRACES_CONFIG = [['men', 'none', 'rgb(71, 71, 135)', [71, 600000]],
+                     ['women', 'tonexty', 'rgb(255, 121, 63)', [75, 600000]]]
     return {
         'data': [
             go.Scatter(
@@ -92,7 +92,21 @@ def update_graph(val):
             ) for i in TRACES_CONFIG],
         'layout': go.Layout(
             yaxis=dict(range=[0, 600000]),
-            title='Різниця в кількості населення серед чоловікі'
+            title='Різниця в кількості населення серед чоловікі',
+            showlegend=False,
+            annotations=[
+                dict(
+                    x=i[3][0],
+                    y=i[3][1],
+                    text=i[0],
+                    showarrow=False,
+                    font=dict(
+                        color=i[2],
+                        size=14
+                    )
+                ) for i in TRACES_CONFIG
+
+            ]
 
         )
     }
