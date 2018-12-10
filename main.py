@@ -57,22 +57,24 @@ df_f = pd.read_csv("population_by_age_sex_year_grouped.csv")
 @app.callback(Output('my-graph', 'figure'),
               [Input('slider', 'value')])
 def update_graph(val):
+    TRACES_CONFIG = [['men', 'none', 'rgb(71, 71, 135)'],
+                     ['women', 'tonexty', 'rgb(255, 121, 63)']]
     return {
         'data': [
             go.Scatter(
                 x=df[df['year'] == val]['age'],
-                y=df[df['year'] == val][i],
-                name=i,
-                mode='markers',
-                type='bar',
-                opacity=0.7,
-                marker={
-                    'size': 15,
-                    'line': {'width': 0.5, 'color': 'white'}
-                },
-            ) for i in ['men', 'women']],
+                y=df[df['year'] == val][i[0]],
+                name=i[0],
+                mode='lines',
+                fill=i[1],
+                opacity=0.4,
+                line=dict(
+                    color=i[2],
+                )
+
+            ) for i in TRACES_CONFIG],
         'layout': go.Layout(
-            margin={'l': 40, 'b': 40, 't': 10, 'r': 10},
+
             hovermode='closest',
             yaxis=dict(range=[0, 600000])
 
