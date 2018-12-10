@@ -86,7 +86,8 @@ def update_graph(val):
                 opacity=0.4,
                 line=dict(
                     color=i[2],
-                )
+                ),
+                fillcolor='rgba(83, 92, 104, 0.2)',
 
             ) for i in TRACES_CONFIG],
         'layout': go.Layout(
