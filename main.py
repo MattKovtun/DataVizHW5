@@ -92,7 +92,7 @@ def update_graph(val):
             ) for i in TRACES_CONFIG],
         'layout': go.Layout(
             yaxis=dict(range=[0, 600000]),
-            title='Різниця в кількості населення серед чоловікі',
+            title='Різниця в кількості населення серед чоловіків та жінок',
             showlegend=False,
             annotations=[
                 dict(
